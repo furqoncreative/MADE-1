@@ -38,6 +38,7 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.ListViewHolder>() {
             with(binding) {
                 Glide.with(itemView.context)
                     .load(data.thumb)
+                    .placeholder(R.drawable.img_thumb_placeholder)
                     .into(ivRecipeThumbnail)
                 tvRecipeName.text = data.title
                 tvRecipePortion.text = data.portion

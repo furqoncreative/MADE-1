@@ -1,6 +1,6 @@
 package com.furqoncreative.core.data.repository
 
-import com.dicoding.tourismapp.core.data.Resource
+import com.furqoncreative.core.data.Resource
 import com.furqoncreative.core.data.NetworkBoundResource
 import com.furqoncreative.core.data.source.local.LocalDataSource
 import com.furqoncreative.core.data.source.remote.RemoteDataSource
@@ -26,7 +26,7 @@ class RecipesBySearchRepository(
                 }
             }
 
-            override fun shouldFetch(data: List<RecipesBySearch>?): Boolean = true
+            override fun shouldFetch(data: List<RecipesBySearch>?): Boolean =  data == null || data.isEmpty()
 
             override suspend fun createCall(): Flow<ApiResponse<List<RecipesBySearchItem>>> =
                 remoteDataSource.getRecipesBySearch(param)

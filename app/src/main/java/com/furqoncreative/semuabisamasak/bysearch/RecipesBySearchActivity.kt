@@ -8,7 +8,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.tourismapp.core.data.Resource
+import com.furqoncreative.core.data.Resource
 import com.furqoncreative.core.domain.model.recipes.Recipes
 import com.furqoncreative.core.domain.model.recipesbysearch.RecipesBySearch
 import com.furqoncreative.core.ui.RecipesAdapter
@@ -48,12 +48,12 @@ class RecipesBySearchActivity : AppCompatActivity() {
         })
 
         binding.ivSearch.setOnClickListener {
-           setRecipesData(binding.etSearch.text.toString())
+            setRecipesData(binding.etSearch.text.toString())
         }
 
     }
 
-    private fun setRecipesData(data:String?) {
+    private fun setRecipesData(data: String?) {
         val recipesAdapter = RecipesAdapter()
         recipesAdapter.onItemClick = { selectedData ->
             val intent = Intent(this, RecipeDetailActivity::class.java)
@@ -73,9 +73,10 @@ class RecipesBySearchActivity : AppCompatActivity() {
                             Log.d("TAG", "setRecipesData 1: $result")
                             Log.d("TAG", "setRecipesData 2: ${recipes.data}")
 
-                            if (!result.isNullOrEmpty()){
+                            if (!result.isNullOrEmpty()) {
                                 recipesAdapter.setData(result)
                             } else {
+                                binding.viewEmpty.tvEmpty.text = "$data : ${getString(R.string.text_no_result)}"
                                 binding.viewEmpty.root.visibility = View.VISIBLE
                             }
                         }
@@ -106,8 +107,7 @@ class RecipesBySearchActivity : AppCompatActivity() {
             portion = it.portion,
             title = it.title,
             key = it.key,
-            dificulty = it.dificulty,
-            isFavorite = it.isFavorite
+            dificulty = it.dificulty
         )
     }
 

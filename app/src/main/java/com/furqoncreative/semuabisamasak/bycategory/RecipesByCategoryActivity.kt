@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.tourismapp.core.data.Resource
+import com.furqoncreative.core.data.Resource
 import com.furqoncreative.core.domain.model.recipes.Recipes
 import com.furqoncreative.core.domain.model.recipesbycategory.RecipesByCategory
 import com.furqoncreative.core.domain.model.recipescategory.RecipesCategory
@@ -78,15 +78,14 @@ class RecipesByCategoryActivity : AppCompatActivity() {
         }
     }
 
-    fun mapToRecipes(data: List<RecipesByCategory>) = data.map {
+    private fun mapToRecipes(data: List<RecipesByCategory>) = data.map {
         Recipes(
             times = it.times,
             thumb = it.thumb,
             portion = it.portion,
             title = it.title,
             key = it.key,
-            dificulty = it.dificulty,
-            isFavorite = it.isFavorite
+            dificulty = it.dificulty
         )
     }
 

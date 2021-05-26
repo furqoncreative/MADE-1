@@ -10,12 +10,10 @@ interface RecipesDao {
     @Query("SELECT * FROM recipes")
     fun getAllRecipes(): Flow<List<RecipesEntity>>
 
-    @Query("SELECT * FROM recipes where isFavorite = 1")
-    fun getFavoriteRecipes(): Flow<List<RecipesEntity>>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipes(recipes: List<RecipesEntity>)
 
-    @Update
-    fun updateFavoriteRecipes(recipes: RecipesEntity)
+
 }

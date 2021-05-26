@@ -28,7 +28,7 @@ val useCaseModule = module {
 
 val viewModelModule = module {
     viewModel { HomeViewModel(get(), get()) }
-    viewModel { RecipeDetailViewModel(get(), get()) }
+    viewModel { RecipeDetailViewModel(get()) }
     viewModel { RecipesByCategoryViewModel(get()) }
     viewModel { RecipesBySearchViewModel(get()) }
 }

@@ -1,7 +1,7 @@
 package com.furqoncreative.core.data.repository
 
 import android.util.Log
-import com.dicoding.tourismapp.core.data.Resource
+import com.furqoncreative.core.data.Resource
 import com.furqoncreative.core.data.NetworkBoundResource
 import com.furqoncreative.core.data.source.local.LocalDataSource
 import com.furqoncreative.core.data.source.remote.RemoteDataSource
@@ -9,15 +9,13 @@ import com.furqoncreative.core.data.source.remote.network.ApiResponse
 import com.furqoncreative.core.data.source.remote.response.recipeslist.RecipesListItem
 import com.furqoncreative.core.domain.model.recipes.Recipes
 import com.furqoncreative.core.domain.repository.recipes.IRecipesRepository
-import com.furqoncreative.core.utils.AppExecutors
 import com.furqoncreative.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class RecipesRepository(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource,
-    private val appExecutors: AppExecutors
+    private val localDataSource: LocalDataSource
 ) : IRecipesRepository {
 
     override fun getAllRecipes(): Flow<Resource<List<Recipes>>> =
@@ -29,7 +27,7 @@ class RecipesRepository(
                 }
             }
 
-            override fun shouldFetch(data: List<Recipes>?): Boolean = true
+            override fun shouldFetch(data: List<Recipes>?): Boolean =  data == null || data.isEmpty()
 
             override suspend fun createCall(): Flow<ApiResponse<List<RecipesListItem>>> =
                 remoteDataSource.getAllRecipes()
@@ -42,15 +40,5 @@ class RecipesRepository(
             }
         }.asFlow()
 
-    override fun getFavoriteRecipes(): Flow<List<Recipes>> {
-        return localDataSource.getAllRecipes().map {
-            DataMapper.mapRecipesEntityToDomain(it)
-        }
-    }
-
-    override fun setFavoriteRecipes(recipes: Recipes, state: Boolean) {
-        val recipeEntity = DataMapper.mapRecipesDomainToEntity(recipes)
-        appExecutors.diskIO().execute { recipeEntity?.let { localDataSource.setFavoriteRecipes(it, state) } }
-    }
 }
 

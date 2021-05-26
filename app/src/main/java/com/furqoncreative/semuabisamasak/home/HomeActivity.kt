@@ -1,6 +1,7 @@
 package com.furqoncreative.semuabisamasak.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,7 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.tourismapp.core.data.Resource
+import com.furqoncreative.core.data.Resource
 import com.furqoncreative.core.ui.CategoryAdapter
 import com.furqoncreative.core.ui.RecipesAdapter
 import com.furqoncreative.semuabisamasak.R
@@ -47,6 +48,10 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra(RecipesBySearchActivity.EXTRA_DATA, binding.etSearch.text.toString())
             startActivity(intent)
         }
+        binding.fabFavorite.setOnClickListener {
+            val uri = Uri.parse("semuabisamasak://favorite")
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
+        }
     }
 
     private fun setRecipesData() {
@@ -84,7 +89,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun setRecipesCategoryData() {
+    private fun setRecipesCategoryData() {
         val categoryAdapter = CategoryAdapter()
         categoryAdapter.onItemClick = { selectedData ->
             val intent = Intent(this, RecipesByCategoryActivity::class.java)

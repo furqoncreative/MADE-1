@@ -59,7 +59,6 @@ val repositoryModule = module {
     single<IRecipesRepository> {
         RecipesRepository(
             get(),
-            get(),
             get()
         )
     }
@@ -71,6 +70,7 @@ val repositoryModule = module {
     }
     single<IRecipeRecpository> {
         RecipeRepository(
+            get(),
             get(),
             get()
         )

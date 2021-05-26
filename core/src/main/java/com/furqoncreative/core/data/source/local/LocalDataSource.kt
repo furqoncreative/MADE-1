@@ -22,12 +22,6 @@ class LocalDataSource(
     suspend fun insertRecipes(recipes: List<RecipesEntity>) =
         recipesDao.insertRecipes(recipes)
 
-    fun getFavoriteRecipes(): Flow<List<RecipesEntity>> = recipesDao.getFavoriteRecipes()
-
-    fun setFavoriteRecipes(recipe: RecipesEntity, newState: Boolean) {
-        recipe.isFavorite = newState
-        recipesDao.updateFavoriteRecipes(recipe)
-    }
 
     /** RECIPES BY CATEGORY*/
     fun getAllRecipesByCategory(param: String): Flow<List<RecipesByCategoryEntity>> =
@@ -55,4 +49,11 @@ class LocalDataSource(
 
     suspend fun insertRecipe(recipe: RecipeEntity) =
         recipeDao.insertRecipe(recipe)
+
+    fun getFavoriteRecipes(): Flow<List<RecipeEntity>> = recipeDao.getFavoriteRecipe()
+
+    fun setFavoriteRecipes(recipe: RecipeEntity, newState: Boolean) {
+        recipe.isFavorite = newState
+        recipeDao.updateFavoriteRecipe(recipe)
+    }
 }

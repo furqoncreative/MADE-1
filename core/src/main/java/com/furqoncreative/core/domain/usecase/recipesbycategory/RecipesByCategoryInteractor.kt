@@ -1,6 +1,6 @@
 package com.furqoncreative.core.domain.usecase.recipesbycategory
 
-import com.dicoding.tourismapp.core.data.Resource
+import com.furqoncreative.core.data.Resource
 import com.furqoncreative.core.domain.model.recipesbycategory.RecipesByCategory
 import com.furqoncreative.core.domain.repository.recipesbycategory.IRecipesByCategoryRepository
 import kotlinx.coroutines.flow.Flow

@@ -1,7 +1,7 @@
 package com.furqoncreative.core.data.repository
 
 import android.util.Log
-import com.dicoding.tourismapp.core.data.Resource
+import com.furqoncreative.core.data.Resource
 import com.furqoncreative.core.data.NetworkBoundResource
 import com.furqoncreative.core.data.source.local.LocalDataSource
 import com.furqoncreative.core.data.source.remote.RemoteDataSource
@@ -16,7 +16,8 @@ import kotlinx.coroutines.flow.map
 
 class RecipeRepository(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val appExecutors: AppExecutors
 ) : IRecipeRecpository {
 
 
@@ -29,7 +30,7 @@ class RecipeRepository(
                 }
             }
 
-            override fun shouldFetch(data: Recipe?): Boolean = true
+            override fun shouldFetch(data: Recipe?): Boolean = data?.key == null
 
             override suspend fun createCall(): Flow<ApiResponse<RecipeDetail>> =
                 remoteDataSource.getRecipe(param)
@@ -42,5 +43,14 @@ class RecipeRepository(
             }
         }.asFlow()
 
+    override fun getFavoriteRecipes(): Flow<List<Recipe>> {
+        return localDataSource.getFavoriteRecipes().map {
+            DataMapper.mapRecipeEntityToDomain(it)
+        }
+    }
 
+    override fun setFavoriteRecipes(recipes: Recipe, state: Boolean) {
+        val recipeEntity = DataMapper.mapRecipeDomainToEntity(recipes)
+        appExecutors.diskIO().execute { localDataSource.setFavoriteRecipes(recipeEntity, state) }
+    }
 }

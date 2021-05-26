@@ -10,11 +10,12 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe WHERE `key` = :param")
     fun getRecipe(param:String): Flow<RecipeEntity>
 
+    @Query("SELECT * FROM recipe where isFavorite = 1")
+    fun getFavoriteRecipe(): Flow<List<RecipeEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipe(recipes: RecipeEntity)
 
-//    @Transaction
-//    suspend fun insertRecipe(recipes: RecipeEntity) {
-//        insert(recipes)
-//    }
+    @Update
+    fun updateFavoriteRecipe(recipe: RecipeEntity)
 }

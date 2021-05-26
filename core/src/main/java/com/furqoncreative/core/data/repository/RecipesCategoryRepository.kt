@@ -1,6 +1,6 @@
 package com.furqoncreative.core.data.repository
 
-import com.dicoding.tourismapp.core.data.Resource
+import com.furqoncreative.core.data.Resource
 import com.furqoncreative.core.data.NetworkBoundResource
 import com.furqoncreative.core.data.source.local.LocalDataSource
 import com.furqoncreative.core.data.source.remote.RemoteDataSource
@@ -8,10 +8,8 @@ import com.furqoncreative.core.data.source.remote.network.ApiResponse
 import com.furqoncreative.core.data.source.remote.response.recipescategory.RecipesCategoryItem
 import com.furqoncreative.core.domain.model.recipescategory.RecipesCategory
 import com.furqoncreative.core.domain.repository.recipescategory.IRecipesCategoryRepository
-import com.furqoncreative.core.utils.AppExecutors
 import com.furqoncreative.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 
 class RecipesCategoryRepository(
@@ -27,7 +25,7 @@ class RecipesCategoryRepository(
                 }
             }
 
-            override fun shouldFetch(data: List<RecipesCategory>?): Boolean = true
+            override fun shouldFetch(data: List<RecipesCategory>?): Boolean =  data == null || data.isEmpty()
 
             override suspend fun createCall(): Flow<ApiResponse<List<RecipesCategoryItem>>> =
                 remoteDataSource.getAllRecipesCategory()

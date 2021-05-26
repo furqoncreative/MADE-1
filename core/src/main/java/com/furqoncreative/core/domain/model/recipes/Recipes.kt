@@ -11,5 +11,4 @@ data class Recipes(
     val title: String? = null,
     val key: String? = null,
     val dificulty: String? = null,
-    var isFavorite: Boolean = false
 ) : Parcelable

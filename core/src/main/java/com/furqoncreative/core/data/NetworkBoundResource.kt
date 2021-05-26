@@ -1,6 +1,6 @@
 package com.furqoncreative.core.data
 
-import com.dicoding.tourismapp.core.data.Resource
+import android.util.Log
 import com.furqoncreative.core.data.source.remote.network.ApiResponse
 import kotlinx.coroutines.flow.*
 
@@ -9,6 +9,8 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
     private var result: Flow<Resource<ResultType>> = flow {
         emit(Resource.Loading())
         val dbSource = loadFromDB().first()
+        Log.d("TAG", "NetworkBoundResource: $dbSource")
+        Log.d("TAG", "NetworkBoundResource: ${shouldFetch(dbSource)}")
         if (shouldFetch(dbSource)) {
             emit(Resource.Loading())
             when (val apiResponse = createCall().first()) {

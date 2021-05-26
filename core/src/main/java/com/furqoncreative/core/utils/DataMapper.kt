@@ -28,8 +28,7 @@ object DataMapper {
                     portion = it.portion,
                     title = it.title,
                     key = it1,
-                    dificulty = it.dificulty,
-                    isFavorite = false
+                    dificulty = it.dificulty
                 )
             }
             recipes?.let { it1 -> recipesList.add(it1) }
@@ -45,22 +44,9 @@ object DataMapper {
                 portion = it.portion,
                 title = it.title,
                 key = it.key,
-                dificulty = it.dificulty,
-                isFavorite = false
+                dificulty = it.dificulty
             )
         }
-
-    fun mapRecipesDomainToEntity(input: Recipes) = input.key?.let {
-        RecipesEntity(
-            times = input.times,
-            thumb = input.thumb,
-            portion = input.portion,
-            title = input.title,
-            key = it,
-            dificulty = input.dificulty,
-            isFavorite = false
-        )
-    }
 
     fun mapRecipesCategoryResponsesToEntities(input: List<RecipesCategoryItem>): List<RecipesCategoryEntity> {
         val recipesCategoryList = ArrayList<RecipesCategoryEntity>()
@@ -79,7 +65,10 @@ object DataMapper {
         }
 
 
-    fun mapRecipesByCategoryResponsesToEntities(param:String, input: List<RecipesByCategoryItem>): List<RecipesByCategoryEntity> {
+    fun mapRecipesByCategoryResponsesToEntities(
+        param: String,
+        input: List<RecipesByCategoryItem>
+    ): List<RecipesByCategoryEntity> {
         val recipesList = ArrayList<RecipesByCategoryEntity>()
         input.map {
             val recipes = it.key?.let { it1 ->
@@ -140,36 +129,67 @@ object DataMapper {
             )
         }
 
+    fun mapRecipeEntityToDomain(input: List<RecipeEntity>): List<Recipe> =
+        input.map {
+            Recipe(
+                times = it.times,
+                thumb = it.thumb,
+                servings = it.servings,
+                title = it.title,
+                dificulty = it.dificulty,
+                ingredient = it.ingredient.split(","),
+                step = it.step.split(","),
+                desc = it.desc,
+                isFavorite = it.isFavorite,
+                key = it.key
+            )
+        }
+
+
     fun mapRecipeResponsesToEntities(param: String, input: RecipeDetail): RecipeEntity {
-        val recipe = RecipeEntity(
+        return RecipeEntity(
             times = input.times,
             thumb = input.thumb,
             servings = input.servings,
             title = input.title,
             dificulty = input.dificulty,
-            ingredient = input.ingredient?.joinToString(),
-            step = input.step?.joinToString(),
+            ingredient = input.ingredient.joinToString(),
+            step = input.step.joinToString(),
             desc = input.desc,
-            key = param
+            key = param,
+            isFavorite = false
         )
-        return recipe
     }
 
     fun mapRecipeEntityToDomain(param: RecipeEntity?): Recipe {
-        var recipe = Recipe()
+        val recipe = Recipe()
         if (param != null) {
-            recipe = Recipe(
-                times = param.times,
-                thumb = param.thumb,
-                servings = param.servings,
-                title = param.title,
-                dificulty = param.dificulty,
-                ingredient = param.ingredient?.split(","),
-                step = param.step?.split(","),
-                desc = param.desc
-            )
+            recipe.times = param.times
+            recipe.thumb = param.thumb
+            recipe.servings = param.servings
+            recipe.title = param.title
+            recipe.dificulty = param.dificulty
+            recipe.ingredient = param.ingredient.split(",")
+            recipe.step = param.step.split(",")
+            recipe.desc = param.desc
+            recipe.isFavorite = param.isFavorite
+            recipe.key = param.key
         }
-
         return recipe
+
     }
+
+    fun mapRecipeDomainToEntity(input: Recipe) = RecipeEntity(
+            times = input.times!!,
+            thumb = input.thumb,
+            servings = input.servings!!,
+            title = input.title!!,
+            dificulty = input.dificulty!!,
+            ingredient = input.ingredient!!.joinToString(),
+            step = input.step!!.joinToString(),
+            desc = input.desc!!,
+            isFavorite = input.isFavorite!!,
+            key = input.key!!
+        )
+
 }

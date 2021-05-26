@@ -47,7 +47,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_gravity="center"
-            android:theme="@style/ButtonBack"
+            style="@style/Icon"
             android:src="@drawable/ic_back" />
     </androidx.cardview.widget.CardView>
 
@@ -73,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/large_dimen"
                 android:textSize="@dimen/large_text"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

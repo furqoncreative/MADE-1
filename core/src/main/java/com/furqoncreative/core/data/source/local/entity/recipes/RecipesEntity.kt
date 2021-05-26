@@ -26,8 +26,5 @@ data class RecipesEntity(
     val title: String? = null,
 
     @ColumnInfo(name = "dificulty")
-    val dificulty: String? = null,
-
-    @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean = false
+    val dificulty: String? = null
 )
